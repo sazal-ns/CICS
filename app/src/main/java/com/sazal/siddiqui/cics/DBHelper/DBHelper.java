@@ -1,9 +1,19 @@
 package com.sazal.siddiqui.cics.DBHelper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.sazal.siddiqui.cics.model.CustomerType;
+import com.sazal.siddiqui.cics.model.Package;
+import com.sazal.siddiqui.cics.model.Provider;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by sazal on 2017-02-12.
@@ -54,75 +64,75 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_ALT_CONTACT_NUMBER = "altContactNumber";
     private static final String KEY_FIRST_CONNECTION_DATE ="firstConnectionDate";
 
-    private static final String KEY_ID = "id";
+    private static final String KEY_ID = "_id";
 
-    private static final String CREATE_TABLE_PACKAGE = "CREATE TABLE " + TABLE_PACKAGE +"(" +
-            KEY_PACKAGE_ID +"INTEGER PRIMARY KEY,"+
-            KEY_PACKAGE_NAME +"TEXT," +
-            KEY_TOTAL_CHANNELS +"INTEGER,"+
-            KEY_PRICE +"DOUBLE,"+
-            KEY_CUSTOM_FIELD1 +"TEXT," +
-            KEY_CUSTOM_FIELD2 +"TEXT," +
-            KEY_CUSTOM_FIELD3 +"TEXT," +
-            KEY_CUSTOM_FIELD4 +"TEXT," +
-            KEY_CREATED_ON +"DATETIME,"+
-            KEY_UPDATED_ON +"DATETIME,"+
-            KEY_CREATED_BY + "INTEGER,"+
-            KEY_UPDATED_BY +"INTEGER"+ ")";
+    private static final String CREATE_TABLE_PACKAGE = "CREATE TABLE " + TABLE_PACKAGE +" (" +
+            KEY_ID +" INTEGER PRIMARY KEY,"+
+            KEY_PACKAGE_NAME +" TEXT NOT NULL," +
+            KEY_TOTAL_CHANNELS +" INTEGER NOT NULL,"+
+            KEY_PRICE +" REAL NOT NULL,"+
+            KEY_CUSTOM_FIELD1 +" TEXT," +
+            KEY_CUSTOM_FIELD2 +" TEXT," +
+            KEY_CUSTOM_FIELD3 +" TEXT," +
+            KEY_CUSTOM_FIELD4 +" TEXT," +
+            KEY_CREATED_ON +" DATETIME,"+
+            KEY_UPDATED_ON +" DATETIME,"+
+            KEY_CREATED_BY + " INTEGER,"+
+            KEY_UPDATED_BY +" INTEGER"+ ")";
 
-    private static final String CREATE_TABLE_PROVIDER = "CREATE TABLE " + TABLE_PROVIDER +"(" +
-            KEY_PROVIDER_ID +"INTEGER PRIMARY KEY,"+
-            KEY_PARENT_PROVIDER_ID +"INTEGER," +
-            KEY_PROVIDER_NAME +"TEXT,"+
-            KEY_AREA_NAME +"TEXT,"+
-            KEY_CUSTOM_FIELD1 +"TEXT," +
-            KEY_CUSTOM_FIELD2 +"TEXT," +
-            KEY_CUSTOM_FIELD3 +"TEXT," +
-            KEY_CUSTOM_FIELD4 +"TEXT," +
-            KEY_CREATED_ON +"DATETIME,"+
-            KEY_UPDATED_ON +"DATETIME,"+
-            KEY_CREATED_BY + "INTEGER,"+
-            KEY_UPDATED_BY +"INTEGER"+ ")";
+    private static final String CREATE_TABLE_PROVIDER = "CREATE TABLE " + TABLE_PROVIDER +" (" +
+            KEY_ID +" INTEGER PRIMARY KEY,"+
+            KEY_PARENT_PROVIDER_ID +" INTEGER NOT NULL," +
+            KEY_PROVIDER_NAME +" TEXT NOT NULL,"+
+            KEY_AREA_NAME +" TEXT NOT NULL,"+
+            KEY_CUSTOM_FIELD1 +" TEXT," +
+            KEY_CUSTOM_FIELD2 +" TEXT," +
+            KEY_CUSTOM_FIELD3 +" TEXT," +
+            KEY_CUSTOM_FIELD4 +" TEXT," +
+            KEY_CREATED_ON +" DATETIME,"+
+            KEY_UPDATED_ON +" DATETIME,"+
+            KEY_CREATED_BY + " INTEGER,"+
+            KEY_UPDATED_BY +" INTEGER"+ ")";
 
-    private static final String CREATE_TABLE_CUSTOMER_TYPE = "CREATE TABLE " + TABLE_CUSTOMER_TYPE +"(" +
-            KEY_TYPE_ID +"INTEGER PRIMARY KEY,"+
-            KEY_TYPE_NAME +"TEXT,"+
-            KEY_CREATED_ON +"DATETIME,"+
-            KEY_UPDATED_ON +"DATETIME,"+
-            KEY_CREATED_BY + "INTEGER,"+
-            KEY_UPDATED_BY +"INTEGER"+ ")";
+    private static final String CREATE_TABLE_CUSTOMER_TYPE = "CREATE TABLE " + TABLE_CUSTOMER_TYPE +" ( " +
+            KEY_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "+
+            KEY_TYPE_NAME +" TEXT NOT NULL, "+
+            KEY_CREATED_ON +" DATETIME, "+
+            KEY_UPDATED_ON +" DATETIME, "+
+            KEY_CREATED_BY + " INTEGER, "+
+            KEY_UPDATED_BY +" INTEGER )";
 
-    private static final String CREATE_TABLE_CUSTOMER_INFO = "CREATE TABLE " + TABLE_CUSTOMER_INFO +"(" +
-            KEY_CUSTOMER_ID +"INTEGER PRIMARY KEY,"+
-            KEY_PROVIDER_ID +"INTEGER," +
-            KEY_NAME_BANGLA +"TEXT,"+
-            KEY_NAME_ENGLISH +"TEXT,"+
-            KEY_CUSTOMER_NUMBER +"TEXT,"+
-            KEY_MOBILE +"TEXT,"+
-            KEY_EMAIL +"EMAIL,"+
+    private static final String CREATE_TABLE_CUSTOMER_INFO = "CREATE TABLE " + TABLE_CUSTOMER_INFO +" (" +
+            KEY_ID +" INTEGER PRIMARY KEY,"+
+            KEY_PROVIDER_ID +" INTEGER NOT NULL," +
+            KEY_NAME_BANGLA +" TEXT,"+
+            KEY_NAME_ENGLISH +" TEXT NOT NULL,"+
+            KEY_CUSTOMER_NUMBER +" TEXT NOT NULL,"+
+            KEY_MOBILE +" TEXT NOT NULL,"+
+            KEY_EMAIL +" EMAIL NOT NULL,"+
             KEY_ALT_CONTACT_NUMBER +"TEXT,"+
-            KEY_FIRST_CONNECTION_DATE +"DATETIME,"+
-            KEY_CUSTOM_FIELD1 +"TEXT," +
-            KEY_CUSTOM_FIELD2 +"TEXT," +
-            KEY_CUSTOM_FIELD3 +"TEXT," +
-            KEY_CUSTOM_FIELD4 +"TEXT," +
-            KEY_CREATED_ON +"DATETIME,"+
-            KEY_UPDATED_ON +"DATETIME,"+
-            KEY_CREATED_BY + "INTEGER,"+
-            KEY_UPDATED_BY +"INTEGER"+ ")";
+            KEY_FIRST_CONNECTION_DATE +" DATETIME,"+
+            KEY_CUSTOM_FIELD1 +" TEXT," +
+            KEY_CUSTOM_FIELD2 +" TEXT," +
+            KEY_CUSTOM_FIELD3 +" TEXT," +
+            KEY_CUSTOM_FIELD4 +" TEXT," +
+            KEY_CREATED_ON +" DATETIME,"+
+            KEY_UPDATED_ON +" DATETIME,"+
+            KEY_CREATED_BY + " INTEGER,"+
+            KEY_UPDATED_BY +" INTEGER"+ ")";
 
-    private static final String CREATE_TABLE_CUSTOMER_PACKAGE = "CREATE TABLE " + TABLE_CUSTOMER_PACKAGE +"(" +
-            KEY_ID +"INTEGER PRIMARY KEY,"+
-            KEY_CUSTOMER_ID +"INTEGER,"+
-            KEY_PACKAGE_ID + " 0+,"+
-            KEY_CUSTOM_FIELD1 +"TEXT," +
-            KEY_CUSTOM_FIELD2 +"TEXT," +
-            KEY_CUSTOM_FIELD3 +"TEXT," +
-            KEY_CUSTOM_FIELD4 +"TEXT," +
-            KEY_CREATED_ON +"DATETIME,"+
-            KEY_UPDATED_ON +"DATETIME,"+
-            KEY_CREATED_BY + "INTEGER,"+
-            KEY_UPDATED_BY +"INTEGER"+ ")";
+    private static final String CREATE_TABLE_CUSTOMER_PACKAGE = "CREATE TABLE " + TABLE_CUSTOMER_PACKAGE +" (" +
+            KEY_ID +" INTEGER PRIMARY KEY,"+
+            KEY_CUSTOMER_ID +" INTEGER NOT NULL,"+
+            KEY_PACKAGE_ID + " INTEGER NOT NULL,"+
+            KEY_CUSTOM_FIELD1 +" TEXT," +
+            KEY_CUSTOM_FIELD2 +" TEXT," +
+            KEY_CUSTOM_FIELD3 +" TEXT," +
+            KEY_CUSTOM_FIELD4 +" TEXT," +
+            KEY_CREATED_ON +" DATETIME,"+
+            KEY_UPDATED_ON +" DATETIME,"+
+            KEY_CREATED_BY + " INTEGER,"+
+            KEY_UPDATED_BY +" INTEGER"+ ")";
 
 
     public DBHelper(Context context) {
@@ -132,6 +142,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.e("DB","onCreate");
         db.execSQL(CREATE_TABLE_CUSTOMER_INFO);
         db.execSQL(CREATE_TABLE_CUSTOMER_PACKAGE);
         db.execSQL(CREATE_TABLE_CUSTOMER_TYPE);
@@ -141,7 +152,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        Log.e(TAG,"onUpgrade");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMER_PACKAGE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROVIDER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMER_TYPE);
@@ -149,5 +160,58 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PACKAGE);
 
         onCreate(db);
+    }
+
+    public long insertCustomerType(CustomerType customerType){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_TYPE_NAME,customerType.getTypeName());
+        values.put(KEY_CREATED_ON,getDateTime());
+
+         long result =db.insert(TABLE_CUSTOMER_TYPE,null,values);
+        closeDB();
+        return result;
+        }
+
+    public long insertPackage(Package aPackage){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_PACKAGE_NAME, aPackage.getPackageName());
+        values.put(KEY_PRICE,aPackage.getPrice());
+        values.put(KEY_TOTAL_CHANNELS,aPackage.getTotalChannels());
+        values.put(KEY_CREATED_ON, getDateTime());
+
+        long r = db.insert(TABLE_PACKAGE,null,values);
+        closeDB();
+        return r;
+    }
+
+    public long insertProvider(Provider provider){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_PROVIDER_NAME, provider.getProviderName());
+        values.put(KEY_AREA_NAME, provider.getAreaName());
+        values.put(KEY_PARENT_PROVIDER_ID, provider.getParentProviderId());
+        values.put(KEY_CREATED_ON, getDateTime());
+
+        long r = db.insert(TABLE_PROVIDER,null,values);
+        closeDB();
+        return r;
+    }
+
+    private void closeDB() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db != null && db.isOpen())
+            db.close();
+    }
+
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }
