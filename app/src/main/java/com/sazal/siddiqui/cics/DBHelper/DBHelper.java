@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.sazal.siddiqui.cics.model.CustomerInformation;
 import com.sazal.siddiqui.cics.model.CustomerType;
 import com.sazal.siddiqui.cics.model.Package;
 import com.sazal.siddiqui.cics.model.Provider;
@@ -198,6 +199,24 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(KEY_CREATED_ON, getDateTime());
 
         long r = db.insert(TABLE_PROVIDER,null,values);
+        closeDB();
+        return r;
+    }
+
+    public  long insertCustomerInformation(CustomerInformation customerInformation){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_PROVIDER_ID, customerInformation.getProvider().getProviderId());
+        values.put(KEY_NAME_ENGLISH, customerInformation.getNameEnglish());
+        values.put(KEY_CUSTOMER_NUMBER, customerInformation.getCoustomerNumber());
+        values.put(KEY_MOBILE, customerInformation.getMobile());
+        values.put(KEY_EMAIL,customerInformation.getEmail());
+        values.put(KEY_ALT_CONTACT_NUMBER, customerInformation.getAltContactNumber());
+        values.put(KEY_FIRST_CONNECTION_DATE, customerInformation.getFirstConectionDate());
+        values.put(KEY_UPDATED_ON, getDateTime());
+
+        long r = db.insert(TABLE_CUSTOMER_INFO,null,values);
         closeDB();
         return r;
     }
