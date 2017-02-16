@@ -193,14 +193,12 @@ public class HomeActivity extends AppCompatActivity {
             case 2:
                 return new ProviderFragment();
             case 3:
-                Log.e("getHomeFragment","asldfds");
                 return new CustomerTypeFragment();
             case 4:
 
             case 5:
 
             default:
-                Log.e("getHomeFragment", String.valueOf(navItemIndex));
                 return new HomeFragment();
         }
     }

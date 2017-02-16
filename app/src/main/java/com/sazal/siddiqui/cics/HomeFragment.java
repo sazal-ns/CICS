@@ -1,12 +1,23 @@
 package com.sazal.siddiqui.cics;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.sazal.siddiqui.cics.DBHelper.DBHelper;
+import com.sazal.siddiqui.cics.model.CustomerType;
+
+import java.util.List;
 
 
 /**
@@ -17,7 +28,7 @@ import android.view.ViewGroup;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -27,7 +38,12 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private Button packageButton, providerButton, customerTypeButton, customerInformationButton;
+    private ListView list;
+
     private OnFragmentInteractionListener mListener;
+
+    DBHelper dbHelper;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -64,7 +80,22 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view= inflater.inflate(R.layout.fragment_home, container, false);
+
+        dbHelper = new DBHelper(getContext());
+
+        packageButton = (Button) view.findViewById(R.id.packageButton);
+        providerButton = (Button) view.findViewById(R.id.providerButton);
+        customerTypeButton = (Button) view.findViewById(R.id.customerTypeButton);
+        customerInformationButton = (Button) view.findViewById(R.id.customerInformationButton);
+        list = (ListView) view.findViewById(R.id.list);
+
+        packageButton.setOnClickListener(this);
+        providerButton.setOnClickListener(this);
+        customerTypeButton.setOnClickListener(this);
+        customerInformationButton.setOnClickListener(this);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -85,6 +116,27 @@ public class HomeFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.providerButton:
+                break;
+            case R.id.packageButton:
+                break;
+            case R.id.customerTypeButton:
+                Intent intent = new Intent(getContext(),ListActivity.class);
+                intent.putExtra("f","ct");
+                startActivity(intent);
+                break;
+            case R.id.customerInformationButton:
+                break;
+            default:
+                break;
+        }
+    }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

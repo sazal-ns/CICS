@@ -7,19 +7,19 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_package"
-            android:title="Package" />
+            android:title="Add Package" />
         <item
             android:id="@+id/nav_provider"
-            android:title="Provider" />
+            android:title="Add Provider" />
         <item
             android:id="@+id/nav_customerType"
-            android:title="Customer Type" />
+            android:title="Add Customer Type" />
         <item
             android:id="@+id/nav_customerInfo"
-            android:title="Customer Information" />
+            android:title="Add Customer Information" />
         <item
             android:id="@+id/CXP"
-            android:title="Customer X Package" />
+            android:title="Set Package to Customer" />
 
     </group>
 

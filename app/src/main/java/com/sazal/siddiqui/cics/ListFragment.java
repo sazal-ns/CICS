@@ -7,32 +7,27 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.sazal.siddiqui.cics.DBHelper.DBHelper;
-import com.sazal.siddiqui.cics.model.CustomerInformation;
+import com.sazal.siddiqui.cics.model.CustomerType;
 
-import org.w3c.dom.Text;
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CustomerInformationFragment.OnFragmentInteractionListener} interface
+ * {@link ListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CustomerInformationFragment#newInstance} factory method to
+ * Use the {@link ListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomerInformationFragment extends Fragment {
+public class ListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private EditText providerIdEditText, nameEnglishEditText, customerNumberEditText, mobileEditText, emailEditText, altContactNumberEditText, firstConectionDateEditText;
-    private Button saveButton;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -40,7 +35,7 @@ public class CustomerInformationFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public CustomerInformationFragment() {
+    public ListFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +45,11 @@ public class CustomerInformationFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CustomerInformationFragment.
+     * @return A new instance of fragment ListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomerInformationFragment newInstance(String param1, String param2) {
-        CustomerInformationFragment fragment = new CustomerInformationFragment();
+    public static ListFragment newInstance(String param1, String param2) {
+        ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,32 +70,43 @@ public class CustomerInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_customer_information, container, false);
-
-        providerIdEditText = (EditText) view.findViewById(R.id.providerIdEditText);
-        nameEnglishEditText = (EditText) view.findViewById(R.id.nameEnglishEditText);
-        customerNumberEditText = (EditText) view.findViewById(R.id.customerNumberEditText);
-        mobileEditText = (EditText) view.findViewById(R.id.mobileEditText);
-        emailEditText = (EditText) view.findViewById(R.id.emailEditText);
-        altContactNumberEditText = (EditText) view.findViewById(R.id.altContactNumberEditText);
-        firstConectionDateEditText = (EditText) view.findViewById(R.id.firstConectionDateEditText);
-
-        saveButton = (Button) view.findViewById(R.id.saveButton);
-
-        DBHelper dbHelper = new DBHelper(getContext());
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomerInformation customerInformation = new CustomerInformation();
-                //customerInformation.setProvider();
-            }
-        });
+        View v =  inflater.inflate(R.layout.fragment_list, container, false);
+        ListView  list = (ListView) v.findViewById(R.id.list);
+        CustomList adp = new CustomList(new DBHelper(getContext()).getAllCustomerType(), getActivity());
+        list.setAdapter(adp);
 
 
-
-        return view;
+        return v;
     }
+
+   /* private void showCustomerType() {
+
+       *//* List<CustomerType> customerTypes = new DBHelper(getContext()).getAllCustomerType();*//*
+        *//*String[] name = new String[customerTypes.size()];
+        StringBuilder builder = new StringBuilder();
+        builder.append("ID"+" ---> "+"Name\n");
+
+        int i=0;
+        for (CustomerType customerType : customerTypes){
+            name[i++] = customerType.getTypeName();
+            builder.append(customerType.getTypeId()+" --> "+customerType.getTypeName()+"\n");
+        }
+*//*
+
+       *//* CustomList customList = new CustomList(customerTypes, getActivity());
+        list.setAdapter(customList);
+        customList.notifyDataSetChanged();*//*
+        *//*new MaterialDialog.Builder(getContext())
+                .title("All Customer Types")
+                .items(name)
+                .show();*//*
+        *//*boolean wrapInScrollView = true;
+        new MaterialDialog.Builder(getContext())
+                .title("All Customer Types")
+                .customView(R.layout.list_row, wrapInScrollView)
+                .show();*//*
+
+    }*/
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

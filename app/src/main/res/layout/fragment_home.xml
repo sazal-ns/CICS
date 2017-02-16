@@ -1,17 +1,78 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sazal.siddiqui.cics.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20sp"
         android:gravity="center"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:text="Customer Information Collection System\n\nDemo App" />
+        android:text="Customer Information Collection System\n\nDemo App" />-->
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+    <Button
+        android:text="Show Package"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/providerButton"
+        android:id="@+id/packageButton"
+        android:background="#7BB0A6"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_margin="10sp"/>
+
+    <Button
+        android:text="Show Provider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/customerTypeButton"
+        android:id="@+id/providerButton"
+        android:background="#3D8EB9"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_margin="10sp"/>
+
+    <Button
+        android:text="Show Customer Type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/customerInformationButton"
+        android:id="@+id/customerTypeButton"
+        android:background="#97CE68"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_margin="10sp"/>
+
+    <Button
+        android:text="Show Customer Information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/customerInformationButton"
+        android:background="#EE543A"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_margin="10sp"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="1dp"
+        />
+
+</RelativeLayout>

@@ -2,6 +2,7 @@ package com.sazal.siddiqui.cics.DBHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -13,7 +14,9 @@ import com.sazal.siddiqui.cics.model.Package;
 import com.sazal.siddiqui.cics.model.Provider;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -174,6 +177,26 @@ public class DBHelper extends SQLiteOpenHelper {
         closeDB();
         return result;
         }
+
+    public List<CustomerType> getAllCustomerType(){
+        List<CustomerType> customerTypes = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_CUSTOMER_TYPE;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                CustomerType customerType = new CustomerType();
+                customerType.setTypeId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                customerType.setTypeName(cursor.getString(cursor.getColumnIndex(KEY_TYPE_NAME)));
+
+                customerTypes.add(customerType);
+            }while (cursor.moveToNext());
+        }
+
+        return customerTypes;
+    }
 
     public long insertPackage(Package aPackage){
         SQLiteDatabase db = this.getWritableDatabase();

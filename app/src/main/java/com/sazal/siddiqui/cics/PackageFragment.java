@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.sazal.siddiqui.cics.DBHelper.DBHelper;
 import com.sazal.siddiqui.cics.model.Package;
 
@@ -34,8 +35,7 @@ public class PackageFragment extends Fragment {
     private String mParam2;
 
     private EditText pakageNameEditText, totalChannelsEditText2,priceEditText;
-    private Button resultButton;
-    private TextView resultTextView;
+    private Button resultButton, clearButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -79,7 +79,7 @@ public class PackageFragment extends Fragment {
         pakageNameEditText = (EditText) view.findViewById(R.id.pakageNameEditText);
         priceEditText = (EditText) view.findViewById(R.id.priceEditText);
         totalChannelsEditText2 = (EditText) view.findViewById(R.id.totalChannelsEditText2);
-        resultTextView = (TextView) view.findViewById(R.id.resultTextView);
+        clearButton =(Button) view.findViewById(R.id.clearButton);
 
         resultButton = (Button) view.findViewById(R.id.saveButton);
         resultButton.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +93,28 @@ public class PackageFragment extends Fragment {
                 DBHelper dbHelper = new DBHelper(getContext());
                 long l = dbHelper.insertPackage(aPackage);
 
-                if (l!=-1) resultTextView.setText("Data Save");
-                else resultTextView.setText("Error on Data Save");
+                if (l!=-1) new MaterialDialog.Builder(getContext())
+                        .title("Result")
+                        .content("Data Save")
+                        .show();
+                else new MaterialDialog.Builder(getContext())
+                        .title("Result")
+                        .content("Error On Data Save")
+                        .show();
+                resultButton.setEnabled(false);
+                clearButton.setEnabled(true);
+            }
+        });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pakageNameEditText.setText(null);
+                priceEditText.setText(null);
+                totalChannelsEditText2.setText(null);
+                resultButton.setEnabled(true);
+                clearButton.setEnabled(false);
+
             }
         });
 

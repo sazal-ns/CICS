@@ -98,13 +98,11 @@
             android:id="@+id/saveButton"
             android:padding="20sp"/>
 
-        <TextView
-            android:text=""
+        <Button
+            android:text="Clear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/resultTextView"
-            android:gravity="center"
-            android:textSize="20sp"
+            android:id="@+id/clearButton"
             android:padding="20sp"/>
     </LinearLayout>
 

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.sazal.siddiqui.cics.DBHelper.DBHelper;
 import com.sazal.siddiqui.cics.model.CustomerType;
 
@@ -31,9 +32,8 @@ public class CustomerTypeFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private EditText typeNameEditText;
-    private Button saveButton;
+    private Button saveButton, cleanButton;
     private DBHelper db;
-    private TextView resultTextView;
 
 
     // TODO: Rename and change types of parameters
@@ -80,7 +80,7 @@ public class CustomerTypeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_customer_type, container, false);
         typeNameEditText = (EditText) view.findViewById(R.id.typeNameEditText);
         saveButton = (Button) view.findViewById(R.id.saveButton);
-        resultTextView = (TextView) view.findViewById(R.id.resultTextView);
+        cleanButton = (Button) view.findViewById(R.id.clearButton);
 
         db = new DBHelper(getContext());
         Log.e("ddbb",db.getDatabaseName());
@@ -93,13 +93,25 @@ public class CustomerTypeFragment extends Fragment {
 
                long result= db.insertCustomerType(customerType);
 
-                Log.e("resurlt",String.valueOf(result));
-                if (result != -1)
-                resultTextView.setText("Data Save");
-                else resultTextView.setText("Error on Data Save");
-
+                if (result!=-1) new MaterialDialog.Builder(getContext())
+                        .title("Result")
+                        .content("Data Save")
+                        .show();
+                else new MaterialDialog.Builder(getContext())
+                        .title("Result")
+                        .content("Error On Data Save")
+                        .show();
                 saveButton.setEnabled(false);
+                cleanButton.setEnabled(true);
+            }
+        });
 
+        cleanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                typeNameEditText.setText(null);
+                saveButton.setEnabled(true);
+                cleanButton.setEnabled(false);
             }
         });
 

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.sazal.siddiqui.cics.DBHelper.DBHelper;
 import com.sazal.siddiqui.cics.model.Package;
 import com.sazal.siddiqui.cics.model.Provider;
@@ -34,9 +35,8 @@ public class ProviderFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private EditText prividerIDNameEditText, nameEditText2,areaEditText;
-    private Button resultButton;
-    private TextView resultTextView;
+    private EditText  nameEditText2,areaEditText;
+    private Button resultButton, clearButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,27 +76,45 @@ public class ProviderFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_, container, false);
-        prividerIDNameEditText = (EditText) view.findViewById(R.id.providerIDNameEditText);
         nameEditText2 = (EditText) view.findViewById(R.id.nameEditText2);
         areaEditText = (EditText) view.findViewById(R.id.areaEditText);
-        resultTextView = (TextView) view.findViewById(R.id.resultTextView);
+        clearButton = (Button) view.findViewById(R.id.clearButton);
+        clearButton.setEnabled(false);
 
         resultButton = (Button) view.findViewById(R.id.saveButton);
         resultButton.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 Provider provider = new Provider();
-                                                provider.setProviderId(Integer.parseInt(prividerIDNameEditText.getText().toString().trim()));
+                                                provider.setParentProviderId(0);
                                                 provider.setProviderName(nameEditText2.getText().toString().trim());
                                                 provider.setAreaName(areaEditText.getText().toString().trim());
 
                                                 DBHelper dbHelper = new DBHelper(getContext());
                                                 long l = dbHelper.insertProvider(provider);
 
-                                                if (l!=-1) resultTextView.setText("Data Save");
-                                                else resultTextView.setText("Error on Data Save");
+                                                if (l!=-1) new MaterialDialog.Builder(getContext())
+                                                        .title("Result")
+                                                        .content("Data Save")
+                                                        .show();
+                                                else new MaterialDialog.Builder(getContext())
+                                                        .title("Result")
+                                                        .content("Error On Data Save")
+                                                        .show();
+                                                resultButton.setEnabled(false);
+                                                clearButton.setEnabled(true);
                                             }
                                         });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nameEditText2.setText(null);
+                areaEditText.setText(null);
+                resultButton.setEnabled(true);
+                clearButton.setEnabled(false);
+            }
+        });
 
 
         return view;

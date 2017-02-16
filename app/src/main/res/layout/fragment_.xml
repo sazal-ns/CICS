@@ -11,31 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50sp">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:text="Parent Provider ID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:textSize="20sp"
-                android:padding="10sp"
-                android:textStyle="bold"
-                android:layout_weight="1" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberSigned"
-                android:hint="Parent Provider ID"
-                android:ems="10"
-                android:padding="10sp"
-                android:id="@+id/providerIDNameEditText"
-                android:layout_weight="1" />
-        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -95,15 +70,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/saveButton"
             android:padding="20sp"/>
-
-        <TextView
-            android:text=""
+        <Button
+            android:text="Clear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/resultTextView"
-            android:gravity="center"
-            android:textSize="20sp"
+            android:id="@+id/clearButton"
             android:padding="20sp"/>
+
     </LinearLayout>
 
 </FrameLayout>
