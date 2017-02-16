@@ -9,12 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.sazal.siddiqui.cics.DBHelper.DBHelper;
 import com.sazal.siddiqui.cics.model.CustomerInformation;
+import com.sazal.siddiqui.cics.model.Provider;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,6 +38,7 @@ public class CustomerInformationFragment extends Fragment {
 
     private EditText providerIdEditText, nameEnglishEditText, customerNumberEditText, mobileEditText, emailEditText, altContactNumberEditText, firstConectionDateEditText;
     private Button saveButton;
+    private Spinner spinner;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -76,8 +82,7 @@ public class CustomerInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_customer_information, container, false);
-
-        providerIdEditText = (EditText) view.findViewById(R.id.providerIdEditText);
+        spinner = (Spinner) view.findViewById(R.id.providerSpinner);
         nameEnglishEditText = (EditText) view.findViewById(R.id.nameEnglishEditText);
         customerNumberEditText = (EditText) view.findViewById(R.id.customerNumberEditText);
         mobileEditText = (EditText) view.findViewById(R.id.mobileEditText);
@@ -88,6 +93,9 @@ public class CustomerInformationFragment extends Fragment {
         saveButton = (Button) view.findViewById(R.id.saveButton);
 
         DBHelper dbHelper = new DBHelper(getContext());
+       // List<Provider> providers = dbHelper.getAllPovider();
+        CustomListPro adp = new CustomListPro(new DBHelper(getContext()).getAllPovider(), getActivity());
+        spinner.setAdapter(adp);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

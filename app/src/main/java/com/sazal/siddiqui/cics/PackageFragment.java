@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,8 +88,10 @@ public class PackageFragment extends Fragment {
             public void onClick(View v) {
                 Package aPackage = new Package();
                 aPackage.setPackageName(pakageNameEditText.getText().toString().trim());
-                aPackage.setPrice(Double.parseDouble(priceEditText.getText().toString().trim()));
-                aPackage.setTotalChannels(Integer.parseInt(totalChannelsEditText2.getText().toString().trim()));
+                aPackage.setPrice(Double.parseDouble(priceEditText.getText().toString()));
+                int i = Integer.parseInt(totalChannelsEditText2.getText().toString());
+                Log.e("int", String.valueOf(i));
+                aPackage.setTotalChannels(i);
 
                 DBHelper dbHelper = new DBHelper(getContext());
                 long l = dbHelper.insertPackage(aPackage);

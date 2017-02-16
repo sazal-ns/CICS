@@ -121,11 +121,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.providerButton:
+                Intent intent = new Intent(getContext(),ListActivity.class);
+                intent.putExtra("f","pro");
+                startActivity(intent);
                 break;
             case R.id.packageButton:
+                intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("f","p");
+                startActivity(intent);
                 break;
             case R.id.customerTypeButton:
-                Intent intent = new Intent(getContext(),ListActivity.class);
+                intent = new Intent(getContext(), ListActivity.class);
                 intent.putExtra("f","ct");
                 startActivity(intent);
                 break;

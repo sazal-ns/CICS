@@ -212,6 +212,28 @@ public class DBHelper extends SQLiteOpenHelper {
         return r;
     }
 
+    public List<Package> getAllPackage(){
+        List<Package> customerTypes = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_PACKAGE;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Package customerType = new Package();
+                customerType.setPackageId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                customerType.setPackageName(cursor.getString(cursor.getColumnIndex(KEY_PACKAGE_NAME)));
+                customerType.setTotalChannels(cursor.getInt(cursor.getColumnIndex(KEY_TOTAL_CHANNELS)));
+                customerType.setPrice(cursor.getDouble(cursor.getColumnIndex(KEY_PRICE)));
+
+                customerTypes.add(customerType);
+            }while (cursor.moveToNext());
+        }
+
+        return customerTypes;
+    }
+
     public long insertProvider(Provider provider){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -224,6 +246,27 @@ public class DBHelper extends SQLiteOpenHelper {
         long r = db.insert(TABLE_PROVIDER,null,values);
         closeDB();
         return r;
+    }
+
+    public List<Provider> getAllPovider(){
+        List<Provider> customerTypes = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_PROVIDER;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                Provider customerType = new Provider();
+                customerType.setProviderId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                customerType.setProviderName(cursor.getString(cursor.getColumnIndex(KEY_PROVIDER_NAME)));
+                customerType.setAreaName(cursor.getString(cursor.getColumnIndex(KEY_AREA_NAME)));
+
+                customerTypes.add(customerType);
+            }while (cursor.moveToNext());
+        }
+
+        return customerTypes;
     }
 
     public  long insertCustomerInformation(CustomerInformation customerInformation){

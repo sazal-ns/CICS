@@ -9,7 +9,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50sp">
+        android:layout_marginTop="20sp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -26,14 +26,10 @@
                 android:textStyle="bold"
                 android:layout_weight="1" />
 
-            <EditText
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Provider"
-                android:ems="10"
-                android:padding="10sp"
-                android:id="@+id/providerIdEditText"
+                android:id="@+id/providerSpinner"
                 android:layout_weight="1" />
         </LinearLayout>
 

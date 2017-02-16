@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sazal.siddiqui.cics.model.CustomerType;
+import com.sazal.siddiqui.cics.model.Provider;
 
 import java.util.List;
 
@@ -16,13 +17,13 @@ import java.util.List;
  * Created by sazal on 2017-02-16.
  */
 
-public class CustomList extends BaseAdapter {
+public class CustomListPro extends BaseAdapter {
 
     private Activity activity;
     private LayoutInflater inflater;
-    private List<CustomerType> items;
+    private List<Provider> items;
 
-    public CustomList(List<CustomerType> items, Activity activity) {
+    public CustomListPro(List<Provider> items, Activity activity) {
         this.items = items;
         this.activity = activity;
     }
@@ -51,16 +52,20 @@ public class CustomList extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_row, null);
 
         TextView title = (TextView) convertView.findViewById(R.id.textView1);
+        TextView rating = (TextView) convertView.findViewById(R.id.textView2);
         TextView htitle = (TextView) convertView.findViewById(R.id.headtextView1);
-        /*TextView rating = (TextView) convertView.findViewById(R.id.rating);
-        TextView genre = (TextView) convertView.findViewById(R.id.genre);
+        TextView hrating = (TextView) convertView.findViewById(R.id.headtextView2);
+        /*TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);*/
 
 
 
-        CustomerType c = items.get(position);
-       /* htitle.setText("Name");*/
-        title.setText(c.getTypeName());
+        Provider c = items.get(position);
+
+     /*   htitle.setText("Provider Name");
+        hrating.setText("Area Name");*/
+        title.setText(c.getProviderName());
+        rating.setText(c.getAreaName());
 
         return convertView;
     }

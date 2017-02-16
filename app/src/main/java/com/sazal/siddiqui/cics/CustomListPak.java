@@ -2,6 +2,7 @@ package com.sazal.siddiqui.cics;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sazal.siddiqui.cics.model.CustomerType;
+import com.sazal.siddiqui.cics.model.Package;
 
 import java.util.List;
 
@@ -16,13 +18,13 @@ import java.util.List;
  * Created by sazal on 2017-02-16.
  */
 
-public class CustomList extends BaseAdapter {
+public class CustomListPak extends BaseAdapter {
 
     private Activity activity;
     private LayoutInflater inflater;
-    private List<CustomerType> items;
+    private List<Package> items;
 
-    public CustomList(List<CustomerType> items, Activity activity) {
+    public CustomListPak(List<Package> items, Activity activity) {
         this.items = items;
         this.activity = activity;
     }
@@ -51,16 +53,23 @@ public class CustomList extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_row, null);
 
         TextView title = (TextView) convertView.findViewById(R.id.textView1);
+        TextView rating = (TextView) convertView.findViewById(R.id.textView2);
+        TextView genre = (TextView) convertView.findViewById(R.id.textView3);
         TextView htitle = (TextView) convertView.findViewById(R.id.headtextView1);
-        /*TextView rating = (TextView) convertView.findViewById(R.id.rating);
-        TextView genre = (TextView) convertView.findViewById(R.id.genre);
-        TextView year = (TextView) convertView.findViewById(R.id.releaseYear);*/
+        TextView hrating = (TextView) convertView.findViewById(R.id.headtextView2);
+        TextView hgenre = (TextView) convertView.findViewById(R.id.headtextView3);
+        /*TextView year = (TextView) convertView.findViewById(R.id.releaseYear);*/
 
 
+        /*htitle.setText("Package Name");
+        hrating.setText("Total Channels");
+        hgenre.setText("Price");*/
 
-        CustomerType c = items.get(position);
-       /* htitle.setText("Name");*/
-        title.setText(c.getTypeName());
+        Package c = items.get(position);
+
+        title.setText(c.getPackageName());
+        rating.setText(String.valueOf(c.getTotalChannels()));
+        genre.setText(String.valueOf(c.getPrice()));
 
         return convertView;
     }
