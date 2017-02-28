@@ -11,20 +11,38 @@ public class CustomerInformation {
     private String nameBangla, nameEnglish, coustomerNumber, mobile, email, altContactNumber, firstConectionDate, coustomField1,coustomField2,
             coustomField3,coustomField4, createdOn, updatedOn;
     private Provider provider;
+    private Package aPackage;
 
     public CustomerInformation() {
     }
 
-    public CustomerInformation(int coustomerId, String nameEnglish, String coustomerNumber, String mobile, String email, String altContactNumber,
-                               String firstConectionDate, Provider provider) {
+    public CustomerInformation(int coustomerId, int createdBy, int updatedBy, String nameBangla, String nameEnglish, String coustomerNumber, String mobile, String email, String altContactNumber, String firstConectionDate, String coustomField1, String coustomField2, String coustomField3, String coustomField4, String createdOn, String updatedOn, Provider provider, Package aPackage) {
         this.coustomerId = coustomerId;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
+        this.nameBangla = nameBangla;
         this.nameEnglish = nameEnglish;
         this.coustomerNumber = coustomerNumber;
         this.mobile = mobile;
         this.email = email;
         this.altContactNumber = altContactNumber;
         this.firstConectionDate = firstConectionDate;
+        this.coustomField1 = coustomField1;
+        this.coustomField2 = coustomField2;
+        this.coustomField3 = coustomField3;
+        this.coustomField4 = coustomField4;
+        this.createdOn = createdOn;
+        this.updatedOn = updatedOn;
         this.provider = provider;
+        this.aPackage = aPackage;
+    }
+
+    public Package getaPackage() {
+        return aPackage;
+    }
+
+    public void setaPackage(Package aPackage) {
+        this.aPackage = aPackage;
     }
 
     public void setCoustomerId(int coustomerId) {

@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.sazal.siddiqui.cics.model.CustomerInformation;
 import com.sazal.siddiqui.cics.model.CustomerType;
+import com.sazal.siddiqui.cics.model.CustomerXPackage;
 import com.sazal.siddiqui.cics.model.Package;
 import com.sazal.siddiqui.cics.model.Provider;
 
@@ -107,36 +108,36 @@ public class DBHelper extends SQLiteOpenHelper {
             KEY_UPDATED_BY +" INTEGER )";
 
     private static final String CREATE_TABLE_CUSTOMER_INFO = "CREATE TABLE " + TABLE_CUSTOMER_INFO +" (" +
-            KEY_ID +" INTEGER PRIMARY KEY,"+
-            KEY_PROVIDER_ID +" INTEGER NOT NULL," +
-            KEY_NAME_BANGLA +" TEXT,"+
-            KEY_NAME_ENGLISH +" TEXT NOT NULL,"+
-            KEY_CUSTOMER_NUMBER +" TEXT NOT NULL,"+
-            KEY_MOBILE +" TEXT NOT NULL,"+
-            KEY_EMAIL +" EMAIL NOT NULL,"+
-            KEY_ALT_CONTACT_NUMBER +"TEXT,"+
-            KEY_FIRST_CONNECTION_DATE +" DATETIME,"+
-            KEY_CUSTOM_FIELD1 +" TEXT," +
-            KEY_CUSTOM_FIELD2 +" TEXT," +
-            KEY_CUSTOM_FIELD3 +" TEXT," +
-            KEY_CUSTOM_FIELD4 +" TEXT," +
-            KEY_CREATED_ON +" DATETIME,"+
-            KEY_UPDATED_ON +" DATETIME,"+
-            KEY_CREATED_BY + " INTEGER,"+
-            KEY_UPDATED_BY +" INTEGER"+ ")";
+            KEY_ID +" INTEGER PRIMARY KEY, "+
+            KEY_PROVIDER_ID +" INTEGER NOT NULL, " +
+            KEY_NAME_BANGLA +" TEXT, "+
+            KEY_NAME_ENGLISH +" TEXT NOT NULL, "+
+            KEY_CUSTOMER_NUMBER +" TEXT NOT NULL, "+
+            KEY_MOBILE +" TEXT NOT NULL, "+
+            KEY_EMAIL +" EMAIL NOT NULL, "+
+            KEY_ALT_CONTACT_NUMBER +" TEXT, "+
+            KEY_FIRST_CONNECTION_DATE +" DATETIME, "+
+            KEY_CUSTOM_FIELD1 +" TEXT, " +
+            KEY_CUSTOM_FIELD2 +" TEXT, " +
+            KEY_CUSTOM_FIELD3 +" TEXT, " +
+            KEY_CUSTOM_FIELD4 +" TEXT, " +
+            KEY_CREATED_ON +" DATETIME, "+
+            KEY_UPDATED_ON +" DATETIME, "+
+            KEY_CREATED_BY + " INTEGER, "+
+            KEY_UPDATED_BY +" INTEGER )";
 
     private static final String CREATE_TABLE_CUSTOMER_PACKAGE = "CREATE TABLE " + TABLE_CUSTOMER_PACKAGE +" (" +
-            KEY_ID +" INTEGER PRIMARY KEY,"+
-            KEY_CUSTOMER_ID +" INTEGER NOT NULL,"+
-            KEY_PACKAGE_ID + " INTEGER NOT NULL,"+
-            KEY_CUSTOM_FIELD1 +" TEXT," +
-            KEY_CUSTOM_FIELD2 +" TEXT," +
-            KEY_CUSTOM_FIELD3 +" TEXT," +
-            KEY_CUSTOM_FIELD4 +" TEXT," +
-            KEY_CREATED_ON +" DATETIME,"+
-            KEY_UPDATED_ON +" DATETIME,"+
-            KEY_CREATED_BY + " INTEGER,"+
-            KEY_UPDATED_BY +" INTEGER"+ ")";
+            KEY_ID +" INTEGER PRIMARY KEY, "+
+            KEY_CUSTOMER_ID +" INTEGER NOT NULL, "+
+            KEY_PACKAGE_ID + " INTEGER NOT NULL, "+
+            KEY_CUSTOM_FIELD1 +" TEXT, " +
+            KEY_CUSTOM_FIELD2 +" TEXT, " +
+            KEY_CUSTOM_FIELD3 +" TEXT, " +
+            KEY_CUSTOM_FIELD4 +" TEXT, " +
+            KEY_CREATED_ON +" DATETIME, "+
+            KEY_UPDATED_ON +" DATETIME, "+
+            KEY_CREATED_BY + " INTEGER, "+
+            KEY_UPDATED_BY +" INTEGER )";
 
 
     public DBHelper(Context context) {
@@ -269,6 +270,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return customerTypes;
     }
 
+
     public  long insertCustomerInformation(CustomerInformation customerInformation){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -286,6 +288,108 @@ public class DBHelper extends SQLiteOpenHelper {
         closeDB();
         return r;
     }
+
+    public List<CustomerInformation> getAllCustomerInfo(){
+        List<CustomerInformation> customerTypes = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_CUSTOMER_INFO;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                CustomerInformation customerType = new CustomerInformation();
+                customerType.setCoustomerId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                customerType.setNameEnglish(cursor.getString(cursor.getColumnIndex(KEY_NAME_ENGLISH)));
+                customerType.setEmail(cursor.getString(cursor.getColumnIndex(KEY_EMAIL)));
+                customerType.setMobile(cursor.getString(cursor.getColumnIndex(KEY_MOBILE)));
+                customerType.setCoustomerNumber(cursor.getString(cursor.getColumnIndex(KEY_CUSTOMER_NUMBER)));
+
+                /*Cursor prov = database.rawQuery("SELECT * FROM "+ TABLE_PROVIDER+" WHERE "+KEY_ID+" = "
+                        +cursor.getInt(cursor.getColumnIndex(KEY_PROVIDER_ID)),null);
+                Provider provider = new Provider();
+                provider.setProviderId(prov.getInt(prov.getColumnIndex(KEY_ID)));
+                provider.setAreaName(prov.getString(prov.getColumnIndex(KEY_AREA_NAME)));
+                provider.setProviderName(prov.getString(prov.getColumnIndex(KEY_PROVIDER_NAME)));
+                customerType.setProvider(provider);*/
+
+
+
+                /*Cursor pak = database.rawQuery("SELECT * FROM "+ TABLE_CUSTOMER_PACKAGE+" WHERE "+KEY_CUSTOMER_ID+" = "
+                        +cursor.getInt(cursor.getColumnIndex(KEY_ID)),null);
+
+                int i = pak.getInt(pak.getColumnIndex(KEY_ID));
+
+                Cursor pak1 = database.rawQuery("SELECT * FROM "+ TABLE_PACKAGE+" WHERE "+KEY_ID+" = "+ String.valueOf(i),null);
+                Package aPackage = new Package();
+                aPackage.setPackageName(pak1.getString(pak1.getColumnIndex(KEY_PACKAGE_NAME)));
+                customerType.setaPackage(aPackage);*/
+
+                customerTypes.add(customerType);
+            }while (cursor.moveToNext());
+        }
+
+        return customerTypes;
+    }
+
+    public  long insertCustomerXPackage(CustomerXPackage  customerInformation){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_CUSTOMER_ID, customerInformation.getCustomer().getCoustomerId());
+        values.put(KEY_PACKAGE_ID, customerInformation.getaPackage().getPackageId());
+        values.put(KEY_UPDATED_ON, getDateTime());
+
+        long r = db.insert(TABLE_CUSTOMER_PACKAGE,null,values);
+        closeDB();
+        return r;
+    }
+
+    public List<CustomerXPackage> getAllCXP(){
+        List<CustomerXPackage> customerTypes = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_CUSTOMER_PACKAGE;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                CustomerXPackage customerType = new CustomerXPackage();
+                customerType.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+
+                int j = cursor.getInt(cursor.getColumnIndex(KEY_CUSTOMER_ID));
+                Log.e("customer id", String.valueOf(j));
+                SQLiteDatabase database1 = this.getReadableDatabase();
+                Cursor pak = database1.rawQuery("SELECT * FROM "+ TABLE_CUSTOMER_INFO+" WHERE "+KEY_ID+" = "+j,null);
+                pak.moveToFirst();
+                CustomerInformation aPackag = new CustomerInformation();
+                aPackag.setNameEnglish(pak.getString(pak.getColumnIndex(KEY_NAME_ENGLISH)));
+                j = pak.getInt(pak.getColumnIndex(KEY_PROVIDER_ID));
+                Cursor pak2 = database1.rawQuery("SELECT * FROM "+ TABLE_PROVIDER+" WHERE "+KEY_ID+" = "+j,null);
+                pak2.moveToFirst();
+                Provider provider = new Provider();
+                provider.setProviderName(pak2.getString(pak2.getColumnIndex(KEY_PROVIDER_NAME)));
+                aPackag.setProvider(provider);
+                customerType.setCustomer(aPackag);
+                database1.close();
+
+                int i = cursor.getInt(cursor.getColumnIndex(KEY_PACKAGE_ID));
+Log.e("package id", String.valueOf(i));
+                SQLiteDatabase database2 = this.getReadableDatabase();
+                Cursor pak1 = database2.rawQuery("SELECT * FROM "+ TABLE_PACKAGE+" WHERE "+KEY_ID+" = "+ i,null);
+                Package aPackage = new Package();
+                pak1.moveToFirst();
+                aPackage.setPackageName(pak1.getString(pak1.getColumnIndex(KEY_PACKAGE_NAME)));
+                customerType.setaPackage(aPackage);
+                database2.close();
+
+                customerTypes.add(customerType);
+            }while (cursor.moveToNext());
+        }
+
+        return customerTypes;
+    }
+
 
     private void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();

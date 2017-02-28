@@ -10,40 +10,31 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sazal.siddiqui.cics.DBHelper.DBHelper;
 import com.sazal.siddiqui.cics.model.CustomerInformation;
+import com.sazal.siddiqui.cics.model.CustomerXPackage;
+import com.sazal.siddiqui.cics.model.Package;
 import com.sazal.siddiqui.cics.model.Provider;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CustomerInformationFragment.OnFragmentInteractionListener} interface
+ * {@link CXPFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CustomerInformationFragment#newInstance} factory method to
+ * Use the {@link CXPFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomerInformationFragment extends Fragment {
+public class CXPFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private EditText providerIdEditText, nameEnglishEditText, customerNumberEditText, mobileEditText, emailEditText, altContactNumberEditText, firstConectionDateEditText;
-    private Button saveButton, clearButton;
-    private Spinner spinner;
-    private Provider provider;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -51,7 +42,13 @@ public class CustomerInformationFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public CustomerInformationFragment() {
+    private Spinner pakSpinner, cusSpinner;
+    DBHelper dbHelper;
+
+    private Package provider;
+    private CustomerInformation customerInformation;
+
+    public CXPFragment() {
         // Required empty public constructor
     }
 
@@ -61,11 +58,11 @@ public class CustomerInformationFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CustomerInformationFragment.
+     * @return A new instance of fragment CXPFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomerInformationFragment newInstance(String param1, String param2) {
-        CustomerInformationFragment fragment = new CustomerInformationFragment();
+    public static CXPFragment newInstance(String param1, String param2) {
+        CXPFragment fragment = new CXPFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,36 +83,41 @@ public class CustomerInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_customer_information, container, false);
-        spinner = (Spinner) view.findViewById(R.id.providerSpinner);
-        nameEnglishEditText = (EditText) view.findViewById(R.id.nameEnglishEditText);
-        customerNumberEditText = (EditText) view.findViewById(R.id.customerNumberEditText);
-        mobileEditText = (EditText) view.findViewById(R.id.mobileEditText);
-        emailEditText = (EditText) view.findViewById(R.id.emailEditText);
-        altContactNumberEditText = (EditText) view.findViewById(R.id.altContactNumberEditText);
-        firstConectionDateEditText = (EditText) view.findViewById(R.id.firstConectionDateEditText);
+        View view = inflater.inflate(R.layout.fragment_cx, container, false);
+        pakSpinner = (Spinner) view.findViewById(R.id.packageSpinner);
+        cusSpinner = (Spinner) view.findViewById(R.id.customerSpinner);
 
-        saveButton = (Button) view.findViewById(R.id.saveButton);
-        clearButton = (Button)view.findViewById(R.id.clearButton);
+        dbHelper = new DBHelper(getContext());
 
-        final DBHelper dbHelper = new DBHelper(getContext());
-        final List<Provider> providerList = dbHelper.getAllPovider();
-        String[] nameList=new String[providerList.size()];
+        final List<CustomerInformation> allCustomerInfo = dbHelper.getAllCustomerInfo();
 
-        for(int i=0;i<providerList.size();i++){
-            nameList[i]=providerList.get(i).getProviderName(); //create array of name
+
+        String[] nameList=new String[allCustomerInfo.size()];
+
+        for(int i=0;i<allCustomerInfo.size();i++){
+            nameList[i]=allCustomerInfo.get(i).getNameEnglish(); //create array of name
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, nameList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
+        cusSpinner.setAdapter(dataAdapter);
 
+        final List<Package> packages = dbHelper.getAllPackage();
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final String[] pakList=new String[packages.size()];
+
+        for(int i=0;i<packages.size();i++){
+            pakList[i]=packages.get(i).getPackageName(); //create array of name
+        }
+
+        ArrayAdapter<String> dataAdapterPak = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, pakList);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        pakSpinner.setAdapter(dataAdapterPak);
+
+        pakSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                provider = providerList.get(position);
-                //Toast.makeText(getContext(),provider.getProviderName(),Toast.LENGTH_LONG).show();
+                provider = packages.get(position);
             }
 
             @Override
@@ -124,19 +126,28 @@ public class CustomerInformationFragment extends Fragment {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        cusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                customerInformation = allCustomerInfo.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        Button save = (Button) view.findViewById(R.id.saveButton);
+
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomerInformation customerInformation = new CustomerInformation();
-                customerInformation.setProvider(provider);
-                customerInformation.setNameEnglish(nameEnglishEditText.getText().toString());
-                customerInformation.setCoustomerNumber(customerNumberEditText.getText().toString());
-                customerInformation.setMobile(mobileEditText.getText().toString());
-                customerInformation.setEmail(emailEditText.getText().toString());
-                customerInformation.setAltContactNumber(altContactNumberEditText.getText().toString());
-                customerInformation.setFirstConectionDate(firstConectionDateEditText.getText().toString());
+                CustomerXPackage customerXPackage = new CustomerXPackage();
+                customerXPackage.setaPackage(provider);
+                customerXPackage.setCustomer(customerInformation);
 
-                long l = dbHelper.insertCustomerInformation(customerInformation);
+                long l = dbHelper.insertCustomerXPackage(customerXPackage);
 
                 if (l!=-1) new MaterialDialog.Builder(getContext())
                         .title("Result")
@@ -146,28 +157,8 @@ public class CustomerInformationFragment extends Fragment {
                         .title("Result")
                         .content("Error On Data Save")
                         .show();
-                saveButton.setEnabled(false);
-                clearButton.setEnabled(true);
-
             }
         });
-
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinner.setPrompt("Select Provider");
-                nameEnglishEditText.setText(null);
-                customerNumberEditText.setText(null);
-                mobileEditText.setText(null);
-                emailEditText.setText(null);
-                altContactNumberEditText.setText(null);
-                firstConectionDateEditText.setText(null);
-                saveButton.setEnabled(true);
-                clearButton.setEnabled(false);
-
-            }
-        });
-
 
         return view;
     }
@@ -182,7 +173,6 @@ public class CustomerInformationFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override

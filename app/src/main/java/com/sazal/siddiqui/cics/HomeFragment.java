@@ -136,6 +136,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.customerInformationButton:
+                intent = new Intent(getContext(), ListActivity.class);
+                intent.putExtra("f","cxp");
+                startActivity(intent);
                 break;
             default:
                 break;

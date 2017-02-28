@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.sazal.siddiqui.cics.DBHelper.DBHelper;
 
@@ -37,7 +38,18 @@ public class ListActivity extends AppCompatActivity {
             adp.notifyDataSetChanged();
         }else if (intent.getStringExtra("f").contentEquals("pro"))
         {
+            Log.e("ddddd","pro");
+            Toast.makeText(getApplicationContext(),"pro",Toast.LENGTH_LONG).show();
             CustomListPro adp = new CustomListPro(new DBHelper(this).getAllPovider(), this);
+            list.setAdapter(adp);
+            adp.notifyDataSetChanged();
+
+        }else if (intent.getStringExtra("f").contentEquals("cxp"))
+        {
+            Log.e("ddddd","cxp");
+            Toast.makeText(getApplicationContext(),"cxp",Toast.LENGTH_LONG).show();
+            CustomCxpList adp = new CustomCxpList(new DBHelper(this).getAllCXP(), this);
+            Log.e("check", adp.toString());
             list.setAdapter(adp);
             adp.notifyDataSetChanged();
 

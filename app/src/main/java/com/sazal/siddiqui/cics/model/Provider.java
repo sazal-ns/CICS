@@ -98,4 +98,9 @@ public class Provider {
     public String getCoustomField4() {
         return coustomField4;
     }
+
+    @Override
+    public String toString() {
+        return providerName;
+    }
 }

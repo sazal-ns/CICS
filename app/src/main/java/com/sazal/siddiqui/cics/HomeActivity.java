@@ -197,7 +197,7 @@ public class HomeActivity extends AppCompatActivity {
             case 4:
                 return new CustomerInformationFragment();
             case 5:
-
+                return new CXPFragment();
             default:
                 return new HomeFragment();
         }
