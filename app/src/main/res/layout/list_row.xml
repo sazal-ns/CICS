@@ -6,43 +6,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/tt">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/headtextView1"
-            android:padding="10sp"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:layout_alignParentLeft="true"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/headtextView2"
-            android:padding="5sp"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:layout_toRightOf="@+id/textView1"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/headtextView3"
-            android:padding="5sp"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:layout_toRightOf="@+id/textView2"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_below="@+id/tt">
+        android:orientation="horizontal">
 
     <TextView
         android:layout_width="match_parent"

@@ -10,6 +10,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.sazal.siddiqui.cics.ListActivity">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/tt">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/headtextView1"
+                    android:padding="10sp"
+                    android:layout_weight="1"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/headtextView2"
+                    android:padding="5sp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/headtextView3"
+                    android:padding="5sp"
+                    android:layout_weight="1"
+                    android:textStyle="bold"/>
+        </LinearLayout>
 
         <ListView
             android:id="@+id/list"
@@ -17,7 +47,8 @@
             android:layout_height="wrap_content"
             android:divider="@color/list_divider"
             android:dividerHeight="1dp"
-            android:listSelector="@drawable/list_row_selector" />
+            android:listSelector="@drawable/list_row_selector"
+            android:layout_below="@+id/tt"/>
 
 
 </RelativeLayout>

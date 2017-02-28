@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sazal.siddiqui.cics.DBHelper.DBHelper;
@@ -89,6 +90,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         customerTypeButton = (Button) view.findViewById(R.id.customerTypeButton);
         customerInformationButton = (Button) view.findViewById(R.id.customerInformationButton);
         list = (ListView) view.findViewById(R.id.list);
+
 
         packageButton.setOnClickListener(this);
         providerButton.setOnClickListener(this);

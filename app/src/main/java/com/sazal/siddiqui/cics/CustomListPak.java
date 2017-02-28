@@ -55,9 +55,9 @@ public class CustomListPak extends BaseAdapter {
         TextView title = (TextView) convertView.findViewById(R.id.textView1);
         TextView rating = (TextView) convertView.findViewById(R.id.textView2);
         TextView genre = (TextView) convertView.findViewById(R.id.textView3);
-        TextView htitle = (TextView) convertView.findViewById(R.id.headtextView1);
+        /*TextView htitle = (TextView) convertView.findViewById(R.id.headtextView1);
         TextView hrating = (TextView) convertView.findViewById(R.id.headtextView2);
-        TextView hgenre = (TextView) convertView.findViewById(R.id.headtextView3);
+        TextView hgenre = (TextView) convertView.findViewById(R.id.headtextView3);*/
         /*TextView year = (TextView) convertView.findViewById(R.id.releaseYear);*/
 
 

@@ -68,6 +68,7 @@
         android:layout_margin="10sp"/>
     </LinearLayout>
 
+
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"

@@ -53,8 +53,8 @@ public class CustomListPro extends BaseAdapter {
 
         TextView title = (TextView) convertView.findViewById(R.id.textView1);
         TextView rating = (TextView) convertView.findViewById(R.id.textView2);
-        TextView htitle = (TextView) convertView.findViewById(R.id.headtextView1);
-        TextView hrating = (TextView) convertView.findViewById(R.id.headtextView2);
+        /*TextView htitle = (TextView) convertView.findViewById(R.id.headtextView1);
+        TextView hrating = (TextView) convertView.findViewById(R.id.headtextView2);*/
         /*TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);*/
 

@@ -51,7 +51,7 @@ public class CustomList extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_row, null);
 
         TextView title = (TextView) convertView.findViewById(R.id.textView1);
-        TextView htitle = (TextView) convertView.findViewById(R.id.headtextView1);
+        //TextView htitle = (TextView) convertView.findViewById(R.id.headtextView1);
         /*TextView rating = (TextView) convertView.findViewById(R.id.rating);
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);*/
