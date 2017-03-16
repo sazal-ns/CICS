@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.sazal.siddiqui.cics.DBHelper.DBHelper;
+import com.sazal.siddiqui.cics.model.Package;
+import com.sazal.siddiqui.cics.model.Provider;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +48,7 @@ public class ExportFragment extends Fragment {
     private String mParam2;
 
     DBHelper dbHelper;
+    SQLiteDatabase database;
 
     private OnFragmentInteractionListener mListener;
 
@@ -90,7 +93,7 @@ public class ExportFragment extends Fragment {
 
         String query = "SELECT * FROM customerInfo";
 
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        database = dbHelper.getReadableDatabase();
         final Cursor cursor = database.rawQuery(query, null);
 
         Button button = (Button) view.findViewById(R.id.exportToEl);
@@ -134,6 +137,8 @@ public class ExportFragment extends Fragment {
                 sheet.addCell(new Label(1, 0, "EMAIL"));
                 sheet.addCell(new Label(2, 0, "MOBILE")); // column and row
                 sheet.addCell(new Label(3, 0, "CUSTOMER_NUMBER"));
+                sheet.addCell(new Label(4, 0, "provider"));
+                sheet.addCell(new Label(5, 0, "aPackage"));
                 if (cursor.moveToFirst()) {
                     do {
                         String name = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_NAME_ENGLISH));
@@ -141,11 +146,32 @@ public class ExportFragment extends Fragment {
                         String mobile = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_MOBILE));
                         String number = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_CUSTOMER_NUMBER));
 
+                        SQLiteDatabase database1 = dbHelper.getReadableDatabase();
+                        Cursor prov = database1.rawQuery("SELECT * FROM "+ DBHelper.TABLE_PROVIDER+" WHERE "+DBHelper.KEY_ID+" = "
+                                +cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_PROVIDER_ID)),null);
+                        prov.moveToFirst();
+                       // provider.setAreaName(prov.getString(prov.getColumnIndex(DBHelper.KEY_AREA_NAME)));
+                       String provider = prov.getString(prov.getColumnIndex(DBHelper.KEY_PROVIDER_NAME));
+
+
+                        SQLiteDatabase database2 = dbHelper.getReadableDatabase();
+                        Cursor pak = database2.rawQuery("SELECT * FROM "+ DBHelper.TABLE_CUSTOMER_PACKAGE+" WHERE "+DBHelper.KEY_CUSTOMER_ID+" = "
+                                +cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_ID)),null);
+
+                        pak.moveToFirst();
+                        int ij = pak.getInt(pak.getColumnIndex(DBHelper.KEY_ID));
+
+                        Cursor pak1 = database.rawQuery("SELECT * FROM "+ DBHelper.TABLE_PACKAGE+" WHERE "+DBHelper.KEY_ID+" = "+ String.valueOf(ij),null);
+                        pak1.moveToFirst();
+                        String paka =pak1.getString(pak1.getColumnIndex(DBHelper.KEY_PACKAGE_NAME));
+
                         int i = cursor.getPosition() + 1;
                         sheet.addCell(new Label(0, i, name));
                         sheet.addCell(new Label(1, i, email));
                         sheet.addCell(new Label(2, i, mobile));
                         sheet.addCell(new Label(3, i, number));
+                        sheet.addCell(new Label(4, i, provider));
+                        sheet.addCell(new Label(5, i, paka));
                     } while (cursor.moveToNext());
                 }
                 //closing cursor

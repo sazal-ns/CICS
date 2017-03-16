@@ -31,11 +31,11 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION =1;
     private static final String DATABASE_NAME = "CICS";
 
-    private static final String TABLE_PACKAGE = "package";
-    private static final String TABLE_PROVIDER ="provider";
+    public static final String TABLE_PACKAGE = "package";
+    public static final String TABLE_PROVIDER ="provider";
     private static final String TABLE_CUSTOMER_TYPE ="customerType";
     private static final String TABLE_CUSTOMER_INFO = "customerInfo";
-    private static final String TABLE_CUSTOMER_PACKAGE = "customerXpackage";
+    public static final String TABLE_CUSTOMER_PACKAGE = "customerXpackage";
 
     private static final String KEY_CREATED_ON = "createdOn";
     private static final String KEY_CREATED_BY = "createdBy";
@@ -48,19 +48,19 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_CUSTOM_FIELD4 = "customField4";
 
     private static final String KEY_PACKAGE_ID = "packageID";
-    private static final String KEY_PACKAGE_NAME = "packageName";
+    public static final String KEY_PACKAGE_NAME = "packageName";
     private static final String KEY_TOTAL_CHANNELS = "totalChannels";
     private static final String KEY_PRICE = "price";
 
-    private static final String KEY_PROVIDER_ID = "providerId";
+    public static final String KEY_PROVIDER_ID = "providerId";
     private static final String KEY_PARENT_PROVIDER_ID = "parentProviderID";
-    private static final String KEY_PROVIDER_NAME = "providerName";
-    private static final String KEY_AREA_NAME = "areaName";
+    public static final String KEY_PROVIDER_NAME = "providerName";
+    public static final String KEY_AREA_NAME = "areaName";
 
     private static final String KEY_TYPE_ID = "typeID";
     private static final String KEY_TYPE_NAME = "typeName";
 
-    private static final String KEY_CUSTOMER_ID = "customerID";
+    public static final String KEY_CUSTOMER_ID = "customerID";
     private static final String KEY_NAME_BANGLA = "nameBangla";
     public static final String KEY_NAME_ENGLISH = "nameEnglish";
     public static final String KEY_CUSTOMER_NUMBER = "customerNumber";
@@ -69,7 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_ALT_CONTACT_NUMBER = "altContactNumber";
     private static final String KEY_FIRST_CONNECTION_DATE ="firstConnectionDate";
 
-    private static final String KEY_ID = "_id";
+    public static final String KEY_ID = "_id";
 
     private static final String CREATE_TABLE_PACKAGE = "CREATE TABLE " + TABLE_PACKAGE +" (" +
             KEY_ID +" INTEGER PRIMARY KEY,"+
@@ -305,17 +305,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 customerType.setMobile(cursor.getString(cursor.getColumnIndex(KEY_MOBILE)));
                 customerType.setCoustomerNumber(cursor.getString(cursor.getColumnIndex(KEY_CUSTOMER_NUMBER)));
 
-                /*Cursor prov = database.rawQuery("SELECT * FROM "+ TABLE_PROVIDER+" WHERE "+KEY_ID+" = "
+                Cursor prov = database.rawQuery("SELECT * FROM "+ TABLE_PROVIDER+" WHERE "+KEY_ID+" = "
                         +cursor.getInt(cursor.getColumnIndex(KEY_PROVIDER_ID)),null);
                 Provider provider = new Provider();
                 provider.setProviderId(prov.getInt(prov.getColumnIndex(KEY_ID)));
                 provider.setAreaName(prov.getString(prov.getColumnIndex(KEY_AREA_NAME)));
                 provider.setProviderName(prov.getString(prov.getColumnIndex(KEY_PROVIDER_NAME)));
-                customerType.setProvider(provider);*/
+                customerType.setProvider(provider);
 
 
 
-                /*Cursor pak = database.rawQuery("SELECT * FROM "+ TABLE_CUSTOMER_PACKAGE+" WHERE "+KEY_CUSTOMER_ID+" = "
+                Cursor pak = database.rawQuery("SELECT * FROM "+ TABLE_CUSTOMER_PACKAGE+" WHERE "+KEY_CUSTOMER_ID+" = "
                         +cursor.getInt(cursor.getColumnIndex(KEY_ID)),null);
 
                 int i = pak.getInt(pak.getColumnIndex(KEY_ID));
@@ -323,7 +323,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 Cursor pak1 = database.rawQuery("SELECT * FROM "+ TABLE_PACKAGE+" WHERE "+KEY_ID+" = "+ String.valueOf(i),null);
                 Package aPackage = new Package();
                 aPackage.setPackageName(pak1.getString(pak1.getColumnIndex(KEY_PACKAGE_NAME)));
-                customerType.setaPackage(aPackage);*/
+                customerType.setaPackage(aPackage);
 
                 customerTypes.add(customerType);
             }while (cursor.moveToNext());
