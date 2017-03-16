@@ -17,5 +17,6 @@
         <item>Customer Type</item>
         <item>Customer Information</item>
         <item>Customer X Package</item>
+        <item>Export</item>
     </string-array>
 </resources>

@@ -62,10 +62,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String KEY_CUSTOMER_ID = "customerID";
     private static final String KEY_NAME_BANGLA = "nameBangla";
-    private static final String KEY_NAME_ENGLISH = "nameEnglish";
-    private static final String KEY_CUSTOMER_NUMBER = "customerNumber";
-    private static final String KEY_MOBILE = "mobile";
-    private static final String KEY_EMAIL = "email";
+    public static final String KEY_NAME_ENGLISH = "nameEnglish";
+    public static final String KEY_CUSTOMER_NUMBER = "customerNumber";
+    public static final String KEY_MOBILE = "mobile";
+    public static final String KEY_EMAIL = "email";
     private static final String KEY_ALT_CONTACT_NUMBER = "altContactNumber";
     private static final String KEY_FIRST_CONNECTION_DATE ="firstConnectionDate";
 

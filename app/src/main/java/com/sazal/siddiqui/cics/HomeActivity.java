@@ -30,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG_CustomerType = "CustomerType";
     private static final String TAG_CustomerInformation = "CustomerInformation";
     private static final String TAG_CustomerXPackage = "CustomerXPackage";
+    private static final String TAG_Export = "Export";
     public static String CURRENT_TAG = TAG_HOME;
 
     private String[] activityTitles;
@@ -108,6 +109,10 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.CXP:
                         navItemIndex = 5;
                         CURRENT_TAG = TAG_CustomerXPackage;
+                        break;
+                    case R.id.export:
+                        navItemIndex = 6;
+                        CURRENT_TAG = TAG_Export;
                         break;
                     default:
                         navItemIndex =0;
@@ -198,6 +203,8 @@ public class HomeActivity extends AppCompatActivity {
                 return new CustomerInformationFragment();
             case 5:
                 return new CXPFragment();
+            case 6:
+                return new ExportFragment();
             default:
                 return new HomeFragment();
         }

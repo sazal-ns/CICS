@@ -1,5 +1,6 @@
 package com.sazal.siddiqui.cics;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,8 +24,12 @@ import com.sazal.siddiqui.cics.model.Provider;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -44,6 +50,8 @@ public class CustomerInformationFragment extends Fragment {
     private Button saveButton, clearButton;
     private Spinner spinner;
     private Provider provider;
+
+    private Calendar calendar= Calendar.getInstance();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -94,6 +102,15 @@ public class CustomerInformationFragment extends Fragment {
         emailEditText = (EditText) view.findViewById(R.id.emailEditText);
         altContactNumberEditText = (EditText) view.findViewById(R.id.altContactNumberEditText);
         firstConectionDateEditText = (EditText) view.findViewById(R.id.firstConectionDateEditText);
+
+        firstConectionDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(getContext(), dateSetListener, calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         saveButton = (Button) view.findViewById(R.id.saveButton);
         clearButton = (Button)view.findViewById(R.id.clearButton);
@@ -146,7 +163,7 @@ public class CustomerInformationFragment extends Fragment {
                         .title("Result")
                         .content("Error On Data Save")
                         .show();
-                saveButton.setEnabled(false);
+                saveButton.setEnabled(true);
                 clearButton.setEnabled(true);
 
             }
@@ -172,6 +189,23 @@ public class CustomerInformationFragment extends Fragment {
         return view;
     }
 
+    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                firstConectionDateEditText.setText(formatDate(calendar.getTime()));
+        }
+    };
+
+    public String formatDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        String hireDate = sdf.format(date);
+        return hireDate;
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
