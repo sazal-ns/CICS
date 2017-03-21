@@ -146,16 +146,16 @@ public class ExportFragment extends Fragment {
                         String mobile = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_MOBILE));
                         String number = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_CUSTOMER_NUMBER));
 
-                        SQLiteDatabase database1 = dbHelper.getReadableDatabase();
-                        Cursor prov = database1.rawQuery("SELECT * FROM "+ DBHelper.TABLE_PROVIDER+" WHERE "+DBHelper.KEY_ID+" = "
+                        //SQLiteDatabase database1 = dbHelper.getReadableDatabase();
+                        Cursor prov = database.rawQuery("SELECT * FROM "+ DBHelper.TABLE_PROVIDER+" WHERE "+DBHelper.KEY_ID+" = "
                                 +cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_PROVIDER_ID)),null);
                         prov.moveToFirst();
                        // provider.setAreaName(prov.getString(prov.getColumnIndex(DBHelper.KEY_AREA_NAME)));
                        String provider = prov.getString(prov.getColumnIndex(DBHelper.KEY_PROVIDER_NAME));
 
 
-                        SQLiteDatabase database2 = dbHelper.getReadableDatabase();
-                        Cursor pak = database2.rawQuery("SELECT * FROM "+ DBHelper.TABLE_CUSTOMER_PACKAGE+" WHERE "+DBHelper.KEY_CUSTOMER_ID+" = "
+                        //SQLiteDatabase database2 = dbHelper.getReadableDatabase();
+                        Cursor pak = database.rawQuery("SELECT * FROM "+ DBHelper.TABLE_CUSTOMER_PACKAGE+" WHERE "+DBHelper.KEY_CUSTOMER_ID+" = "
                                 +cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_ID)),null);
 
                         pak.moveToFirst();

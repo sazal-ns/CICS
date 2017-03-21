@@ -332,6 +332,30 @@ public class DBHelper extends SQLiteOpenHelper {
         return customerTypes;
     }
 
+    public List<CustomerInformation> getAllCustomerInfoN(){
+        List<CustomerInformation> customerTypes = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_CUSTOMER_INFO;
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                CustomerInformation customerType = new CustomerInformation();
+                customerType.setCoustomerId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                customerType.setNameEnglish(cursor.getString(cursor.getColumnIndex(KEY_NAME_ENGLISH)));
+                customerType.setEmail(cursor.getString(cursor.getColumnIndex(KEY_EMAIL)));
+                customerType.setMobile(cursor.getString(cursor.getColumnIndex(KEY_MOBILE)));
+                customerType.setCoustomerNumber(cursor.getString(cursor.getColumnIndex(KEY_CUSTOMER_NUMBER)));
+
+
+                customerTypes.add(customerType);
+            }while (cursor.moveToNext());
+        }
+
+        return customerTypes;
+    }
+
     public  long insertCustomerXPackage(CustomerXPackage  customerInformation){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

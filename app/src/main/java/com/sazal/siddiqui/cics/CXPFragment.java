@@ -89,7 +89,7 @@ public class CXPFragment extends Fragment {
 
         dbHelper = new DBHelper(getContext());
 
-        final List<CustomerInformation> allCustomerInfo = dbHelper.getAllCustomerInfo();
+        final List<CustomerInformation> allCustomerInfo = dbHelper.getAllCustomerInfoN();
 
 
         String[] nameList=new String[allCustomerInfo.size()];
