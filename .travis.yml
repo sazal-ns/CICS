@@ -1,13 +1,13 @@
-language: java
-jdk:
-  - oraclejdk8
+language: android
 
-install:
-- ./gradlew install
+android:
+  components:
+    - tools
+    - build-tools-25.0.2
+    - android-22
+    - sys-img-armeabi-v7a-android-22
 
-script:
-- ./gradlew check
-- ./gradlew -p acceptance-test test
+script: ./gradlew build connectedCheck
 
-after_success:
-- test ${TRAVIS_TAG} -a ${BINTRAY} && ./gradlew -Pversion=${TRAVIS_TAG#v} bintrayUpload
+before_install:
+ - chmod +x gradlew
