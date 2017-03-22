@@ -11,3 +11,8 @@ script: ./gradlew build connectedCheck
 
 before_install:
  - chmod +x gradlew
+ 
+ licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
