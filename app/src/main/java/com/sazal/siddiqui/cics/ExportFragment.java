@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,7 +110,7 @@ public class ExportFragment extends Fragment {
     }
 
     private void export(Cursor cursor) {
-        final String fileName = "sazal.xls";
+        final String fileName = dbHelper.getDateTime()+ "sazal.xls";
 
         //Saving file in external storage
         File sdCard = Environment.getExternalStorageDirectory();
@@ -146,8 +147,8 @@ public class ExportFragment extends Fragment {
                         String mobile = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_MOBILE));
                         String number = cursor.getString(cursor.getColumnIndex(DBHelper.KEY_CUSTOMER_NUMBER));
 
-                        //SQLiteDatabase database1 = dbHelper.getReadableDatabase();
-                        Cursor prov = database.rawQuery("SELECT * FROM "+ DBHelper.TABLE_PROVIDER+" WHERE "+DBHelper.KEY_ID+" = "
+                        SQLiteDatabase database1 = dbHelper.getReadableDatabase();
+                        Cursor prov = database1.rawQuery("SELECT * FROM "+ DBHelper.TABLE_PROVIDER+" WHERE "+DBHelper.KEY_ID+" = "
                                 +cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_PROVIDER_ID)),null);
                         prov.moveToFirst();
                        // provider.setAreaName(prov.getString(prov.getColumnIndex(DBHelper.KEY_AREA_NAME)));
@@ -159,11 +160,17 @@ public class ExportFragment extends Fragment {
                                 +cursor.getInt(cursor.getColumnIndex(DBHelper.KEY_ID)),null);
 
                         pak.moveToFirst();
-                        int ij = pak.getInt(pak.getColumnIndex(DBHelper.KEY_ID));
 
-                        Cursor pak1 = database.rawQuery("SELECT * FROM "+ DBHelper.TABLE_PACKAGE+" WHERE "+DBHelper.KEY_ID+" = "+ String.valueOf(ij),null);
-                        pak1.moveToFirst();
-                        String paka =pak1.getString(pak1.getColumnIndex(DBHelper.KEY_PACKAGE_NAME));
+                        Cursor query = database1.rawQuery("SELECT * FROM "+ DBHelper.TABLE_PACKAGE+" WHERE "+DBHelper.KEY_ID+" = "+
+                                pak.getInt(pak.getColumnIndex(DBHelper.KEY_PACKAGE_ID)),null);
+                        query.moveToFirst();
+                        String s =query.getString(query.getColumnIndex(DBHelper.KEY_PACKAGE_NAME));
+                        Log.i("paka",s);
+
+                        pak.close();
+                        query.close();
+                        database1.close();
+                        database2.close();
 
                         int i = cursor.getPosition() + 1;
                         sheet.addCell(new Label(0, i, name));
@@ -171,7 +178,7 @@ public class ExportFragment extends Fragment {
                         sheet.addCell(new Label(2, i, mobile));
                         sheet.addCell(new Label(3, i, number));
                         sheet.addCell(new Label(4, i, provider));
-                        sheet.addCell(new Label(5, i, paka));
+                        sheet.addCell(new Label(5, i, s));
                     } while (cursor.moveToNext());
                 }
                 //closing cursor

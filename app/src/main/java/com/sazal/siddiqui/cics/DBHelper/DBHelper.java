@@ -47,7 +47,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_CUSTOM_FIELD3 = "customField3";
     private static final String KEY_CUSTOM_FIELD4 = "customField4";
 
-    private static final String KEY_PACKAGE_ID = "packageID";
+    public static final String KEY_PACKAGE_ID = "packageID";
     public static final String KEY_PACKAGE_NAME = "packageName";
     private static final String KEY_TOTAL_CHANNELS = "totalChannels";
     private static final String KEY_PRICE = "price";
@@ -421,7 +421,7 @@ Log.e("package id", String.valueOf(i));
             db.close();
     }
 
-    private String getDateTime() {
+    public String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();
