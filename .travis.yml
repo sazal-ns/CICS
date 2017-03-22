@@ -5,14 +5,14 @@ android:
     - tools
     - build-tools-25.0.2
     - android-25
+    - extra-android-support
     - sys-img-armeabi-v7a-android-22
+  licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
 script: ./gradlew build connectedCheck
 
 before_install:
  - chmod +x gradlew
- 
- licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
